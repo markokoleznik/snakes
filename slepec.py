@@ -26,9 +26,55 @@ class Slepec(Snake):
            * spisek koordinat vseh misk je self.field.mice.keys()
            * spisek vseh kac je self.field.snakes
         """
+
+
+        closestMice = self.closest_mice(self.coords[0], self.field.mice.keys())
+        smer = (self.dx, self.dy)
+
+        if smer[0] == -1:
+            # kaca gre levo
+            if self.coords[0][1] - closestMice[1] < 0:
+                self.turn_left()
+            else:
+                self.turn_right()
+        elif smer[0] == 1:
+            # kaca gre desno
+            if self.coords[0][1] - closestMice[1] < 0:
+                self.turn_left()
+            else:
+                self.turn_right()
+        else:
+            # kaca gre gor
+            if self.coords[0][0] - closestMice[0] > 0:
+                self.turn_left()
+            else:
+                self.turn_right()
+
+                
+
+        
            
         if random.randint(0,10) < 5:
             if random.randint(0,1) == 1:
                 self.turn_left()
             else:
                 self.turn_right()
+
+    def closest_mice(self, current_location, mices):
+        closest = float("inf")
+        closest_mice = mices
+        for mice in mices:
+            d = abs(current_location[0] - mice[0]) + abs(current_location[1] - mice[1])
+            if d < closest:
+                closest = d
+                closest_mice = mice
+        return closest_mice
+
+
+
+
+
+
+
+
+        
